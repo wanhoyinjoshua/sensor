@@ -3,7 +3,7 @@ import useOrientation from '../hooks/useOrientation'
 const Sensor = () => {
     const orientation=useOrientation()
     const [initialrotation,setInitialRotation]=useState([0,0,0])
-    const [signchange,setSignchange]=useState(0)
+    
     //gamma in the horizontal position will be -90
     //then to measure head flexion/ from neutral 
     // you need to from 
@@ -23,14 +23,7 @@ const Sensor = () => {
       
 
     },[orientation,initialrotation])
-    function abs(angle:number){
-        if(angle<0){
-            return 90-Math.abs(angle)
-        }else{
-            return angle
-        }
-
-    }
+  
     function calculaterotation(){
         
         var d0=initialrotation[2]
