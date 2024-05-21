@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import useOrientation from '../hooks/useOrientation'
 const Sensor = () => {
     const orientation=useOrientation()
-    const [initialrotation,setInitialRotation]=useState<any>([0,0,0])
-
+    const [initialrotation,setInitialRotation]=useState([0,0,0])
+    const [signchange,setSignchange]=useState(0)
     //gamma in the horizontal position will be -90
     //then to measure head flexion/ from neutral 
     // you need to from 
@@ -23,44 +23,72 @@ const Sensor = () => {
       
 
     },[orientation,initialrotation])
+    function abs(angle:number){
+        if(angle<0){
+            return 90-Math.abs(angle)
+        }else{
+            return angle
+        }
+
+    }
     function calculaterotation(){
-        var neutral=90
+        
         var d0=initialrotation[2]
         var d1=orientation[2]
         var isFlexion=false
+        var total_motion=0
+
+        
+       
+        //in a supie position, 
+        //beta transverse rotaiton if the head 
+        // and gamma is flexion extension of the head.
 
         //sign 
-        if (d0<0 && d1<0){
-              //if from smaller -ve to bigger -ve then it will be extension 
-        // if from bigger _ve to smaller -ve will be flexion
-            if(d0<d1){
+        //
+        if(d0<=0){
+            
+            if(d1>=d0){
+                //this will be extension
                 isFlexion=false
+                total_motion=(90-Math.abs(d1))-(90-Math.abs(d0))
+            }else{
+                //this will be flexion
+                isFlexion=true
+                total_motion=(90-Math.abs(d0))-(90-Math.abs(d1))
+
+            }
+
+
+        }
+        else if(d0>=0){
+            if(Math.abs(d1)>d0){
+                //this will be extension
+                isFlexion=false
+                if(d1>=0){
+                    total_motion=(90-d0)-(90-d1)
+
+                }else{
+                    total_motion=(90-Math.abs(d1))+(90-Math.abs(d0))
+
+                }
+            
             }
             else{
+                //this will be flexion up till a certain point 
                 isFlexion=true
+                total_motion=(90-d1)-(90-d0)
             }
 
         }
-        else if (d0>0 && d1>0){
-            //if from +ve to smaller ve , then will be flexion 
-        //if from smaller +ve to bigger +ve , then will be extension 
-                if(d0>d1){
-                    isFlexion=true
-                }
-                else{
-                    isFlexion=false
-                }
+       
+       // this only solves the flexion problem
+        
+        
 
-        }else if(d0>=0 &&d1<=0){
-             // if from +ve to -ve then will be extension
-             isFlexion=false
 
-        }
-        else{
-             // from -ve to +ve will be flexion 
-             isFlexion=true
 
-        }
+        //
        
       
 
@@ -71,16 +99,19 @@ const Sensor = () => {
 
         
 
-        var distfrom_90_starting= neutral-Math.abs(orientation[2])
-        var distfrom_90_fixed=neutral-Math.abs(initialrotation[2])
-        if(distfrom_90_starting==distfrom_90_fixed){
-            var total_motion=0
-        }else{
-            var total_motion=distfrom_90_fixed+distfrom_90_starting
-
-        }
+       if(total_motion>90){
+        var total_motion=-1000
+       }
        
         return [total_motion,isFlexion]
+
+    }
+
+    function calculatetransrotation(){
+        var d0=initialrotation[0]
+        var d1=orientation[0]
+        var rotation= Math.abs(d0-d1)
+        return rotation
 
     }
   return (
@@ -109,6 +140,10 @@ const Sensor = () => {
         {calculaterotation()[1]==true?<div>Flexion</div>:<div>Extension</div>}
         <br></br>
         {calculaterotation()[0]}
+        
+        <br></br>
+        Rotation:
+        {calculatetransrotation()}
 
     </div>
   )
