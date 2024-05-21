@@ -73,7 +73,13 @@ const Sensor = () => {
 
         var distfrom_90_starting= neutral-Math.abs(orientation[2])
         var distfrom_90_fixed=neutral-Math.abs(initialrotation[2])
-        var total_motion=distfrom_90_fixed+distfrom_90_starting
+        if(distfrom_90_starting==distfrom_90_fixed){
+            var total_motion=0
+        }else{
+            var total_motion=distfrom_90_fixed+distfrom_90_starting
+
+        }
+       
         return [total_motion,isFlexion]
 
     }
@@ -96,7 +102,7 @@ const Sensor = () => {
         {orientation[1]-initialrotation[1]}
         <br></br>
         Calculated rotations gamma:
-        {calculaterotation()[0]}
+        {orientation[2]-initialrotation[2]}
 
         <br></br>
         Movemnt:
