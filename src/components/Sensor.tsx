@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react'
 import useOrientation from '../hooks/useOrientation'
+import Quaternion from 'quaternion';
+;
 const Sensor = () => {
     const orientation=useOrientation()
-    const [initialrotation,setInitialRotation]=useState([0,0,0])
+    const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
+    function connvertQ(alpha:number,beta:number,gamma:number){
+        var deg = Math.PI / 180;
+    var q = Quaternion.fromEulerLogical(alpha * deg, beta * deg, -gamma * deg, 'ZXY');
+return q
+
+    }
+    
     
     //gamma in the horizontal position will be -90
     //then to measure head flexion/ from neutral 
@@ -25,12 +34,15 @@ const Sensor = () => {
     },[orientation,initialrotation])
   
     function calculaterotation(){
-        
-        var d0=initialrotation[2]
-        var d1=orientation[2]
-        var isFlexion=false
-        var total_motion=0
-
+        //inverse of initial position * transformed 
+        let q1Inverse = initialrotation.inverse();
+        let qDifference =orientation.mul(q1Inverse);
+        let angle=qDifference.toEuler("ZXY")
+        const magic=180/Math.PI
+        let anglea=Math.floor(angle[0]*magic)
+        let angleb=Math.floor(angle[1]*magic)
+        let anglec=Math.floor(angle[2]*magic )     
+     
         
        
         //in a supie position, 
@@ -39,104 +51,35 @@ const Sensor = () => {
 
         //sign 
         //
-        if(d0<=0){
-            
-            if(d1>=d0){
-                //this will be extension
-                isFlexion=false
-                total_motion=(90-Math.abs(d1))-(90-Math.abs(d0))
-            }else{
-                //this will be flexion
-                isFlexion=true
-                total_motion=(90-Math.abs(d0))-(90-Math.abs(d1))
-
-            }
-
-
-        }
-        else if(d0>=0){
-            if(Math.abs(d1)>d0){
-                //this will be extension
-                isFlexion=false
-                if(d1>=0){
-                    total_motion=(90-d0)-(90-d1)
-
-                }else{
-                    total_motion=(90-Math.abs(d1))+(90-Math.abs(d0))
-
-                }
-            
-            }
-            else{
-                //this will be flexion up till a certain point 
-                isFlexion=true
-                total_motion=(90-d1)-(90-d0)
-            }
-
-        }
+     
        
-       // this only solves the flexion problem
-        
-        
-
-
-
-        //
-       
-      
-
-        
-
-       
-       
-
-        
-
-       if(total_motion>90){
-        var total_motion=-1000
-       }
-       
-        return [total_motion,isFlexion]
-
+        return [anglea,angleb,anglec]
     }
 
-    function calculatetransrotation(){
-        var d0=initialrotation[0]
-        var d1=orientation[0]
-        var rotation= Math.abs(d0-d1)
-        return rotation
-
-    }
+   
   return (
     <div>Sensor
         <div>Please calibrate and set to desired neutral position</div>
         <button onClick={()=>{
-            var initial=[orientation[0],orientation[1],orientation[2]]
-            setInitialRotation(initial)
+            
+            setInitialRotation(orientation)
         }}>Set Iniital position</button>
 
         {JSON.stringify(orientation)}
         Initila position: 
         {JSON.stringify(initialrotation)}
 
-        Calculated rotations alpha:
-        {orientation[0]-initialrotation[0]}
-        <br></br>
-        Calculated rotations alpha:
-        {orientation[1]-initialrotation[1]}
-        <br></br>
-        Calculated rotations gamma:
-        {orientation[2]-initialrotation[2]}
-
+       
         <br></br>
         Movemnt:
-        {calculaterotation()[1]==true?<div>Flexion</div>:<div>Extension</div>}
-        <br></br>
-        {calculaterotation()[0]}
+       
         
         <br></br>
         Rotation:
-        {calculatetransrotation()}
+
+        <br></br>
+        Q:
+        {JSON.stringify(calculaterotation())}
 
     </div>
   )
