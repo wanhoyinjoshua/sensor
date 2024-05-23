@@ -7,25 +7,11 @@ const Sensor = () => {
    
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
-    var deg = Math.PI / 180;
+
    
     useEffect(()=>{
 
-        if(Math.abs(acceleration)>12){
-           
-            
-            setInitialRotation(Quaternion.fromEulerLogical(90*deg,0,0,'ZXY'))
-        }
-        if(Math.abs(acceleration)<=5&&Math.abs(acceleration)>=0){
-            var d= localStorage.getItem("initial")
-            if(d!=null){
-                var parsed_d=JSON.parse(d)
-            setInitialRotation(parsed_d)
-
-            }
-            
-        }
-
+       
     },[acceleration])
     
     //gamma in the horizontal position will be -90

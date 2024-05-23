@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react'
 
 ;
   const useAcceleration = () => {
+    const [x,setx]=useState(0)
+    const [y,sety]=useState(0)
     const [z,setz]=useState(0)
 
     function handleOrientation(e:any){
-        setz(e.acceleration.z)
+        setx(e.accelerationIncludingGravity.x)
+        sety(e.accelerationIncludingGravity.y)
+        setz(e.accelerationIncludingGravity.z)
 
 
     }
@@ -29,7 +33,7 @@ import { useEffect, useState } from 'react'
        
     }, [])
   
-    return z
+    return [x,y,z]
   }
 
 export default useAcceleration
