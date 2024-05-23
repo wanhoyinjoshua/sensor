@@ -7,10 +7,12 @@ const Sensor = () => {
    
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
+    const[hallpike,setHallpike]=useState(false)
 
     var deg = Math.PI / 180;
     useEffect(()=>{
         if(acceleration[2]>10){
+            setHallpike(true)
             setInitialRotation(Quaternion.fromEulerLogical(90*deg,0,-0,'ZXY'))
         }
 
@@ -71,6 +73,9 @@ const Sensor = () => {
         {JSON.stringify(calculaterotation())}
         <br></br>
         {JSON.stringify(acceleration)}
+        <br>
+        </br>
+        {JSON.stringify(hallpike)}
 
     </div>
   )
