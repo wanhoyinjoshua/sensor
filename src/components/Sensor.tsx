@@ -4,7 +4,7 @@ import Quaternion from 'quaternion';
 import useAcceleration from '../hooks/useAcceleration';
 const Sensor = () => {
     const orientation=useOrientation()
-    var horizontal=[90,0,0]
+   
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
     var deg = Math.PI / 180;
