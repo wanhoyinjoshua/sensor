@@ -77,23 +77,33 @@ const Sensor = () => {
   return (
     <div>Sensor
         <div>Please calibrate and set to desired neutral position</div>
+        <div>Please rotate screen to landscape and disable autorotate on your phone</div>\
+        <div>Readings will be avalibel only when you are in landscape mode</div>
         <button onClick={()=>{
             localStorage.setItem("initial",JSON.stringify(orientation))
             setInitialRotation(orientation)
         }}>Set Iniital position</button>
 
       
-       
-       
-        Q:
-        {JSON.stringify(calculaterotation())}
+       {window.screen.orientation.type=="landscape-primary"?<div>
+
+       Flexion:{calculaterotation()[0]}
         <br></br>
-        {JSON.stringify(acceleration)}
+        Rotation:{calculaterotation()[1]}
+
+
+       </div>:null}
+       
+        
+       
+
         <br>
         </br>
-        {JSON.stringify(hallpike)}
+       
         <br></br>
         {JSON.stringify(window.screen.orientation.type)}
+        
+      
 
     </div>
   )
