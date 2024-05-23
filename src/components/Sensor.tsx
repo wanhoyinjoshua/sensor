@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import useOrientation from '../hooks/useOrientation'
 import Quaternion from 'quaternion';
 import useAcceleration from '../hooks/useAcceleration';
+
 const Sensor = () => {
     const orientation=useOrientation()
-   
+    
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
     const[hallpike,setHallpike]=useState(false)
@@ -91,6 +92,8 @@ const Sensor = () => {
         <br>
         </br>
         {JSON.stringify(hallpike)}
+        <br></br>
+        {JSON.stringify(window.screen.orientation.type)}
 
     </div>
   )
