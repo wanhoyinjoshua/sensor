@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react'
 import useOrientation from '../hooks/useOrientation'
 import Quaternion from 'quaternion';
-;
+import useAcceleration from '../hooks/useAcceleration';
 const Sensor = () => {
     const orientation=useOrientation()
+    var horizontal=[90,0,0]
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
-    function connvertQ(alpha:number,beta:number,gamma:number){
-        var deg = Math.PI / 180;
-    var q = Quaternion.fromEulerLogical(alpha * deg, beta * deg, -gamma * deg, 'ZXY');
-return q
-
-    }
+    const acceleration=useAcceleration()
     
     
     //gamma in the horizontal position will be -90
@@ -80,6 +76,8 @@ return q
         <br></br>
         Q:
         {JSON.stringify(calculaterotation())}
+        <br></br>
+        {JSON.stringify(acceleration)}
 
     </div>
   )
