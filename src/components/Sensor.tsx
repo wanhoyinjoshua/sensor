@@ -80,19 +80,9 @@ const Sensor = () => {
             setInitialRotation(orientation)
         }}>Set Iniital position</button>
 
-        {JSON.stringify(orientation)}
-        Initila position: 
-        {JSON.stringify(initialrotation)}
-
+      
        
-        <br></br>
-        Movemnt:
        
-        
-        <br></br>
-        Rotation:
-
-        <br></br>
         Q:
         {JSON.stringify(calculaterotation())}
         <br></br>

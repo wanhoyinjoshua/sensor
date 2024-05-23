@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
     const [z,setz]=useState(0)
 
     function handleOrientation(e:any){
-        setz(e.acceleration.x)
+        setz(e.acceleration.z)
 
 
     }
