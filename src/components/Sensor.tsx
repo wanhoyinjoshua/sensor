@@ -83,9 +83,14 @@ const Sensor = () => {
             localStorage.setItem("initial",JSON.stringify(orientation))
             setInitialRotation(orientation)
         }}>Set Iniital position</button>
+        <button onClick={()=>{
+            // @ts-ignore
+            window.screen.orientation['lock']('landscape')
+        }}>Lock Screen</button>
 
       
-       {window.screen.orientation.type=="landscape-primary"?<div>
+       {window.screen.orientation.type=="landscape-primary"?
+       <div>
 
        Flexion:{calculaterotation()[0]}
         <br></br>
