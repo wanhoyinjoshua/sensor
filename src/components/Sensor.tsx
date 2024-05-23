@@ -8,8 +8,19 @@ const Sensor = () => {
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
 
-   
+    var deg = Math.PI / 180;
     useEffect(()=>{
+        if(acceleration[2]>10){
+            setInitialRotation(Quaternion.fromEulerLogical(90*deg,0,0,'ZXY'))
+        }else if (acceleration[0]>5){
+            var ff=localStorage.getItem('initial')
+            if(ff!=null){
+                setInitialRotation(JSON.parse(ff))
+
+
+            }
+            
+        }
 
        
     },[acceleration])
@@ -28,11 +39,6 @@ const Sensor = () => {
     // or i can calculate the distance from 90 .
 
 
-  
-    useEffect(()=>{
-      
-
-    },[orientation,initialrotation])
   
     function calculaterotation(){
         //inverse of initial position * transformed 
