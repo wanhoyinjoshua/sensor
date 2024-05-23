@@ -32,6 +32,8 @@ const Sensor = () => {
     // if from -ve to +ve then it means it is a flexion movement 
     // or i can calculate the distance from 90 .
 
+    
+
 
   
     function calculaterotation(){
@@ -40,9 +42,22 @@ const Sensor = () => {
         let qDifference =orientation.mul(q1Inverse);
         let angle=qDifference.toEuler("ZXY")
         const magic=180/Math.PI
-        let anglea=Math.floor(angle[0]*magic)
+      
         let angleb=Math.floor(angle[1]*magic)
-        let anglec=Math.floor(angle[2]*magic )     
+        let anglec=Math.floor(angle[2]*magic )  
+        var flexion=0
+       
+        var rotation =0
+        if(hallpike==true){
+            flexion=angleb
+        rotation=anglec
+
+        }else{
+            flexion=anglec
+        rotation=angleb
+
+            
+        }
      
         
        
@@ -54,7 +69,7 @@ const Sensor = () => {
         //
      
        
-        return [anglea,angleb,anglec]
+        return [flexion,rotation]
     }
 
    
