@@ -8,9 +8,9 @@ import { useEffect, useState } from 'react'
     const [z,setz]=useState(0)
 
     function handleOrientation(e:any){
-        setx(e.accelerationIncludingGravity.x)
-        sety(e.accelerationIncludingGravity.y)
-        setz(e.accelerationIncludingGravity.z)
+        setx(Math.floor(e.accelerationIncludingGravity.x))
+        sety(Math.floor(e.accelerationIncludingGravity.y))
+        setz(Math.floor(e.accelerationIncludingGravity.z))
 
 
     }
