@@ -85,7 +85,7 @@ const Sensor = () => {
         }}>Set Iniital position</button>
         <button onClick={()=>{
             // @ts-ignore
-            window.screen.orientation['lock']('landscape')
+            window.screen.orientation.lock('landscape-primary')
         }}>Lock Screen</button>
 
       
