@@ -6,7 +6,7 @@ import { useEffect } from 'react'
     // @ts-ignore
     
   const [gyro,setgyro]=useState([0,0,0])
-    
+  const magic=180/Math.PI
        
     
        
@@ -20,7 +20,7 @@ import { useEffect } from 'react'
             let gyroscope = new Gyroscope({ frequency: 60 });
     
         gyroscope.addEventListener("reading", () => {
-            setgyro([Math.floor(gyroscope.x),Math.floor(gyroscope.y),Math.floor(gyroscope.z)])
+            setgyro([Math.floor(gyroscope.x*magic),Math.floor(gyroscope.y*magic),Math.floor(gyroscope.z*magic)])
          
         });
         gyroscope.start();
