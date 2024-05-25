@@ -16,6 +16,10 @@ const Sensor = () => {
             setHallpike(true)
             setInitialRotation(Quaternion.fromEulerLogical(90*deg,0,-0,'ZXY'))
         }
+        else if(acceleration[2]<2){
+            setHallpike(false)
+            setInitialRotation(JSON.parse(localStorage.getItem("initial")||""))
+        }
 
        
     },[acceleration])
@@ -126,6 +130,7 @@ const Sensor = () => {
         {JSON.stringify(window.screen.orientation.type)}
         {JSON.stringify(hallpike)}
         
+       
       
 
     </div>
