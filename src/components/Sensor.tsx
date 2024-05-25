@@ -18,7 +18,12 @@ const Sensor = () => {
         }
         else if(acceleration[2]<2){
             setHallpike(false)
-            setInitialRotation(JSON.parse(localStorage.getItem("initial")||""))
+            var cc=localStorage.getItem("initial")
+            if(cc!=null){
+                setInitialRotation(JSON.parse(cc))
+
+            }
+           
         }
 
        
