@@ -69,8 +69,8 @@ const Sensor = () => {
         rotation=angleb
 
         }else{
-            flexion=angleb
-        rotation=anglec
+            flexion=anglec
+        rotation=angleb
 
             
         }
@@ -124,6 +124,7 @@ const Sensor = () => {
        
         <br></br>
         {JSON.stringify(window.screen.orientation.type)}
+        {JSON.stringify(hallpike)}
         
       
 
