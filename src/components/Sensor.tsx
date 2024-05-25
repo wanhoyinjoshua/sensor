@@ -9,6 +9,7 @@ import RotationTracker from './RotationTracker';
 const Sensor = () => {
     const {quat,abc}=useOrientation()
     const{gyro} =useGyro()
+    const [high,setHigh]=useState(0)
     
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
@@ -52,6 +53,7 @@ const Sensor = () => {
     // or i can calculate the distance from 90 .
     function reset(){
         setHallpike(false)
+        setHigh(0)
 
     }
     
@@ -163,7 +165,7 @@ const Sensor = () => {
         {JSON.stringify(hallpike)}
         <br></br>
        
-        <RotationTracker data={Math.abs(gyro[0])}></RotationTracker>
+        <RotationTracker data={Math.abs(gyro[0])} high={high} setHigh={setHigh}></RotationTracker>
        
         
        
