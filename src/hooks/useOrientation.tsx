@@ -5,7 +5,7 @@ import Quaternion from 'quaternion';
   const useOrientation = () => {
 
     const[quat,setQ]=useState<Quaternion>(Quaternion.ONE)
-    
+    const [abc,setAbc]=useState([0,0,0])
     
 
   
@@ -13,6 +13,9 @@ import Quaternion from 'quaternion';
         const alpha = event.alpha;
         const beta = event.beta;
         const gamma = event.gamma;
+        setAbc([event.alpha,event.beta,event.gamma
+
+        ])
        
         // Do stuff...
        
@@ -39,7 +42,7 @@ import Quaternion from 'quaternion';
        
     }, [])
   
-    return quat
+    return {quat,abc}
   }
 
 export default useOrientation

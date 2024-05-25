@@ -4,7 +4,7 @@ import Quaternion from 'quaternion';
 import useAcceleration from '../hooks/useAcceleration';
 
 const Sensor = () => {
-    const orientation=useOrientation()
+    const {quat,abc}=useOrientation()
     
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
@@ -20,7 +20,11 @@ const Sensor = () => {
             setHallpike(false)
             var cc=localStorage.getItem("initial")
             if(cc!=null){
-                setInitialRotation(JSON.parse(cc))
+                var raw= JSON.parse(cc)
+                var a=raw[0]
+                var b =raw[1]
+                var c= raw[2]
+                setInitialRotation(Quaternion.fromEulerLogical(a*deg,b*deg,-c*deg,'ZXY'))
 
             }
            
@@ -64,7 +68,7 @@ const Sensor = () => {
     function calculaterotation(){
         //inverse of initial position * transformed 
         let q1Inverse = initialrotation.inverse();
-        let qDifference =orientation.mul(q1Inverse);
+        let qDifference =quat.mul(q1Inverse);
         let angle=qDifference.toEuler("ZXY")
         const magic=180/Math.PI
       
@@ -104,8 +108,8 @@ const Sensor = () => {
         <div>Please rotate screen to landscape and disable autorotate on your phone</div>\
         <div>Readings will be avalibel only when you are in landscape mode</div>
         <button onClick={()=>{
-            localStorage.setItem("initial",JSON.stringify(orientation))
-            setInitialRotation(orientation)
+            localStorage.setItem("initial",JSON.stringify(abc))
+            setInitialRotation(quat)
         }}>Set Iniital position</button>
         <button onClick={()=>{
             
