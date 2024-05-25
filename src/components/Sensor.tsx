@@ -141,7 +141,8 @@ const Sensor = () => {
         {JSON.stringify(window.screen.orientation.type)}
         {JSON.stringify(hallpike)}
         <br></br>
-        {JSON.stringify(gyro)}
+        Rotation per second
+        {JSON.stringify(Math.abs(gyro[0]))}
         
        
       
