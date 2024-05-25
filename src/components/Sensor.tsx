@@ -3,7 +3,8 @@ import useOrientation from '../hooks/useOrientation'
 import Quaternion from 'quaternion';
 import useAcceleration from '../hooks/useAcceleration';
 import useGyro from '../hooks/useGyroscope';
-
+import Stat from './Stat';
+import Instructions from './Instructions';
 const Sensor = () => {
     const {quat,abc}=useOrientation()
     const{gyro} =useGyro()
@@ -13,6 +14,7 @@ const Sensor = () => {
     const[hallpike,setHallpike]=useState(false)
 
     var deg = Math.PI / 180;
+
     useEffect(()=>{
         if(acceleration[2]>10){
             setHallpike(true)
@@ -47,7 +49,10 @@ const Sensor = () => {
     // flexion will decrease in value 
     // if from -ve to +ve then it means it is a flexion movement 
     // or i can calculate the distance from 90 .
+    function reset(){
+        setHallpike(false)
 
+    }
     
     function launchIntoFullscreen(element:any) {
         if(element.requestFullscreen) {
@@ -65,7 +70,19 @@ const Sensor = () => {
       
       // Launch fullscreen for browsers that support it!
     
+    function calculatemovement(){
+        if(calculaterotation()[0]>0){
+            return "Flexion"
+        }
+        if(calculaterotation()[0]<0){
+            return "Extension"
 
+        }
+        if(calculaterotation()[0]==0){
+            return "Neutral"
+
+        }
+    }
   
     function calculaterotation(){
         //inverse of initial position * transformed 
@@ -105,31 +122,34 @@ const Sensor = () => {
 
    
   return (
-    <div>Sensor
-        <div>Please calibrate and set to desired neutral position</div>
-        <div>Please rotate screen to landscape and disable autorotate on your phone</div>\
-        <div>Readings will be avalibel only when you are in landscape mode</div>
-        <button onClick={()=>{
+    <div>
+     
+        <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=>{
             localStorage.setItem("initial",JSON.stringify(abc))
             setInitialRotation(quat)
         }}>Set Iniital position</button>
-        <button onClick={()=>{
+        <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+         onClick={()=>{
             
             // @ts-ignore
-            window.screen.orientation.lock('landscape-primary')
-        }}>Lock Screen</button>
-        <button onClick={()=>{launchIntoFullscreen(document.documentElement)}}>Full screen</button>
+            reset()
+        }}>Clear all movements</button>
+        <button 
+        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        onClick={()=>{launchIntoFullscreen(document.documentElement)}}>Full screen</button>
 
       
        {window.screen.orientation.type=="landscape-primary"?
        <div>
+        <Stat stats={[
+            { name: calculatemovement(), value:Math.sign(calculaterotation()[0]) },
+            { name: 'Rotation', value: Math.sign(calculaterotation()[1]) },
+        ]}></Stat>
 
-       Flexion:{calculaterotation()[0]}
-        <br></br>
-        Rotation:{calculaterotation()[1]}
+      
 
 
-       </div>:null}
+       </div>:<Instructions></Instructions>}
        
         
        
