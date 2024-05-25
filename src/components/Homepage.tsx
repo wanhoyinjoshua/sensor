@@ -1,10 +1,8 @@
 import {
-    AcademicCapIcon,
-    BanknotesIcon,
+
     CheckBadgeIcon,
     ClockIcon,
-    ReceiptRefundIcon,
-    UsersIcon,
+
   } from '@heroicons/react/24/outline'
   
   const actions = [
