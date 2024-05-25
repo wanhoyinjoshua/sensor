@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import useOrientation from '../hooks/useOrientation'
 import Quaternion from 'quaternion';
 import useAcceleration from '../hooks/useAcceleration';
+import useGyro from '../hooks/useGyroscope';
 
 const Sensor = () => {
     const {quat,abc}=useOrientation()
+    const{gyro} =useGyro()
     
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
@@ -138,6 +140,8 @@ const Sensor = () => {
         <br></br>
         {JSON.stringify(window.screen.orientation.type)}
         {JSON.stringify(hallpike)}
+        <br></br>
+        {JSON.stringify(gyro)}
         
        
       
