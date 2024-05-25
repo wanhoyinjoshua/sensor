@@ -65,12 +65,12 @@ const Sensor = () => {
        
         var rotation =0
         if(hallpike==true){
-            flexion=angleb
-        rotation=anglec
-
-        }else{
             flexion=anglec
         rotation=angleb
+
+        }else{
+            flexion=angleb
+        rotation=anglec
 
             
         }
