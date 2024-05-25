@@ -5,6 +5,7 @@ import useAcceleration from '../hooks/useAcceleration';
 import useGyro from '../hooks/useGyroscope';
 import Stat from './Stat';
 import Instructions from './Instructions';
+import RotationTracker from './RotationTracker';
 const Sensor = () => {
     const {quat,abc}=useOrientation()
     const{gyro} =useGyro()
@@ -161,8 +162,9 @@ const Sensor = () => {
         {JSON.stringify(window.screen.orientation.type)}
         {JSON.stringify(hallpike)}
         <br></br>
-        Rotation per second
-        {JSON.stringify(Math.abs(gyro[0]))}
+       
+        <RotationTracker data={Math.abs(gyro[0])}></RotationTracker>
+       
         
        
       
