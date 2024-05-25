@@ -34,7 +34,22 @@ const Sensor = () => {
     // or i can calculate the distance from 90 .
 
     
-
+    function launchIntoFullscreen(element:any) {
+        if(element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if(element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if(element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen();
+        } else if(element.msRequestFullscreen) {
+          element.msRequestFullscreen();
+        }
+        // @ts-ignore
+        window.screen.orientation.lock('landscape-primary')
+      }
+      
+      // Launch fullscreen for browsers that support it!
+    
 
   
     function calculaterotation(){
@@ -84,9 +99,11 @@ const Sensor = () => {
             setInitialRotation(orientation)
         }}>Set Iniital position</button>
         <button onClick={()=>{
+            
             // @ts-ignore
             window.screen.orientation.lock('landscape-primary')
         }}>Lock Screen</button>
+        <button onClick={()=>{launchIntoFullscreen(document.documentElement)}}>Full screen</button>
 
       
        {window.screen.orientation.type=="landscape-primary"?
