@@ -20,7 +20,7 @@ import { useEffect } from 'react'
             let gyroscope = new Gyroscope({ frequency: 60 });
     
         gyroscope.addEventListener("reading", () => {
-            setgyro([gyroscope.x,gyroscope.y,gyroscope.z])
+            setgyro([Math.floor(gyroscope.x),Math.floor(gyroscope.y),Math.floor(gyroscope.z)])
          
         });
         gyroscope.start();
