@@ -142,8 +142,8 @@ const Sensor = () => {
        {window.screen.orientation.type=="landscape-primary"?
        <div>
         <Stat stats={[
-            { name: calculatemovement(), value:Math.sign(calculaterotation()[0]) },
-            { name: 'Rotation', value: Math.sign(calculaterotation()[1]) },
+            { name: calculatemovement(), value:Math.abs(calculaterotation()[0]) },
+            { name: 'Rotation', value: Math.abs(calculaterotation()[1]) },
         ]}></Stat>
 
       
