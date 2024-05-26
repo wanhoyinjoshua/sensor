@@ -5,11 +5,12 @@ import useAcceleration from '../hooks/useAcceleration';
 import useGyro from '../hooks/useGyroscope';
 import Stat from './Stat';
 import Instructions from './Instructions';
-import RotationTracker from './RotationTracker';
-const Sensor = () => {
+
+const Sensor = (props:any) => {
     const {quat,abc}=useOrientation()
     const{gyro} =useGyro()
     const [high,setHigh]=useState(0)
+   
     
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
     const acceleration=useAcceleration()
@@ -54,6 +55,7 @@ const Sensor = () => {
     function reset(){
         setHallpike(false)
         setHigh(0)
+        
 
     }
     
@@ -100,8 +102,16 @@ const Sensor = () => {
        
         var rotation =0
         if(hallpike==true){
-            flexion=anglec
-        rotation=angleb
+            if(props.calibration==true){
+                flexion=anglec
+                rotation=angleb
+
+            }else{
+                flexion=angleb
+                rotation=anglec
+
+            }
+           
 
         }else{
             flexion=anglec
@@ -126,7 +136,24 @@ const Sensor = () => {
    
   return (
     <div>
+      
+        {props.sensor==true?
+        <section>
+            <h1>Please use the readings below to check if the sensor is picking up data correctly.</h1>
+        <br></br>
+        App is now in mode  {props.calibration==true?<span>1</span>:<span>0</span>}
+        <br></br>
+        Start in a neutral position and then simulate the movements of a hallpike, if the readings for rotation and flexion/ extension is flipped, click switch mode.
+        <button onClick={()=>{props.setCalibration(!props.calibration)
+        }}
+        className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >Switch to mode {props.calibration==true?<span>0</span>:<span>1</span>}</button>
      
+            
+        </section>:<div></div>
+        
+        
+        }
+        
         <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=>{
             localStorage.setItem("initial",JSON.stringify(abc))
             setInitialRotation(quat)
@@ -141,13 +168,22 @@ const Sensor = () => {
         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={()=>{launchIntoFullscreen(document.documentElement)}}>Full screen</button>
 
+        <br></br>
+        {hallpike==true?<div className='bg-yellow-300'>Detected Patient is lying down</div>:<div  className='bg-green-300'>Detected Patient is sitting up</div>}
+        
       
        {window.screen.orientation.type=="landscape-primary"?
        <div>
         <Stat stats={[
             { name: calculatemovement(), value:Math.abs(calculaterotation()[0]) },
             { name: 'Rotation', value: Math.abs(calculaterotation()[1]) },
-        ]}></Stat>
+        ]}
+        
+        gyro={Math.abs(gyro[0])}
+        high={high}
+        setHigh={setHigh}
+        
+        ></Stat>
 
       
 
@@ -161,12 +197,10 @@ const Sensor = () => {
         </br>
        
         <br></br>
-        {JSON.stringify(window.screen.orientation.type)}
-        {JSON.stringify(hallpike)}
-        <br></br>
+        
        
-        <RotationTracker data={Math.abs(gyro[0])} high={high} setHigh={setHigh}></RotationTracker>
        
+        
         
        
       

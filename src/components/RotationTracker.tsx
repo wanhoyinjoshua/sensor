@@ -8,12 +8,13 @@ const RotationTracker = (props:any) => {
         }
     },[props.data])
   return (
-    <div>RotationTracker
-    Highest angular acceleration achieved :
-    <br></br>
-    {props.high} degrees per second sqaured
+   <div>
+     {props.high} 
+
+   </div>
+   
     
-    </div>
+  
   )
 }
 
