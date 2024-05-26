@@ -82,7 +82,7 @@ const Sensor = (props:any) => {
       }
       
       // Launch fullscreen for browsers that support it!
-    
+    /*
     function calculatemovement(){
         if(calculaterotation()[0]>0){
             if(props.calibration==true){
@@ -107,6 +107,7 @@ const Sensor = (props:any) => {
 
         }
     }
+    */
   
     function calculaterotation(){
         //inverse of initial position * transformed 
@@ -208,7 +209,7 @@ const Sensor = (props:any) => {
        {window.screen.orientation.type=="landscape-primary"?
        <div>
         <Stat stats={[
-            { name: calculatemovement(), value:Math.abs(calculaterotation()[0]) },
+            { name: "Flexion/Extension", value:Math.abs(calculaterotation()[0]) },
             { name: 'Rotation', value: Math.abs(calculaterotation()[1]) },
         ]}
         
