@@ -5,6 +5,7 @@ import useAcceleration from '../hooks/useAcceleration';
 import useGyro from '../hooks/useGyroscope';
 import Stat from './Stat';
 import Instructions from './Instructions';
+import Timer from './Timer';
 
 const Sensor = (props:any) => {
     const {quat,abc}=useOrientation()
@@ -164,7 +165,8 @@ const Sensor = (props:any) => {
         
         }
         <br></br>
-        
+        <Timer abc={abc} quat={quat} setInitialRotation={setInitialRotation} initialSeconds={10}></Timer>
+
         <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=>{
             localStorage.setItem("initial",JSON.stringify(abc))
             setInitialRotation(quat)
