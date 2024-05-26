@@ -59,8 +59,14 @@ const Sensor = (props:any) => {
         
 
     }
-    
+
+    //exitFullscreen()
+    function getFullScreen(){
+        return document.fullscreenElement != null;
+
+    }    
     function launchIntoFullscreen(element:any) {
+        
         if(element.requestFullscreen) {
           element.requestFullscreen();
         } else if(element.mozRequestFullScreen) {
@@ -171,7 +177,16 @@ const Sensor = (props:any) => {
         }}>Clear all movements</button>
         <button 
         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        onClick={()=>{launchIntoFullscreen(document.documentElement)}}>Full screen</button>
+        onClick={()=>{
+            if(getFullScreen()){
+                document.exitFullscreen()
+
+            }else{
+                launchIntoFullscreen(document.documentElement)
+
+            }
+           
+            }}>{getFullScreen()==true?<span>Exit fullscreen</span>:<span>Full screen</span>}</button>
 
         <br></br>
         {hallpike==true?<div className='bg-yellow-300'>Detected Patient is lying down</div>:<div  className='bg-green-300'>Detected Patient is sitting up</div>}
