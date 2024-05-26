@@ -12,7 +12,7 @@ function App() {
   return (
     
       <div>
-        {screen==0?<div></div>: <button onClick={()=>{setScreen(0)}}>Return to Home screen</button>}
+        {screen==0?<div></div>: <button className='flex justify-start' onClick={()=>{setScreen(0)}}>Return to Home screen</button>}
        
         {screen==0&& <Welcome setScreen={setScreen}></Welcome>}
 
