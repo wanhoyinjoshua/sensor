@@ -16,8 +16,7 @@ function App() {
        
         {screen==0&& <Welcome setScreen={setScreen}></Welcome>}
 
-        {screen==1&& <Sensor setScreen={setScreen} sensor={true} calibration={calibration} setCalibration={setCalibration}></Sensor>}
-        {screen==2&& <Sensor setScreen={setScreen} sensor={false} calibration={calibration} setCalibration={setCalibration}></Sensor>}
+        {screen==1&& <Sensor setScreen={setScreen}  calibration={calibration} setCalibration={setCalibration}></Sensor>}
        
         </div>
        

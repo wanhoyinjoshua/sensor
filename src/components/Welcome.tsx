@@ -19,13 +19,10 @@ const Welcome = (props:any) => {
             In turn , hopefully this provides a simple and accessible way to standardize vestibular testing or providing a more reliable measurement of cervical rotation or flexion.
             <br>
             </br>
+           
             <button
               className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-             onClick={()=>{props.setScreen(1)}}>Calibrate Phone to sensors</button>
-            <br></br>
-            <button
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-             onClick={()=>{props.setScreen(2)}}>Sensor Interface</button>
+             onClick={()=>{props.setScreen(1)}}>Sensor Interface</button>
            
 
           

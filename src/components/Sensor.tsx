@@ -10,6 +10,7 @@ const Sensor = (props:any) => {
     const {quat,abc}=useOrientation()
     const{gyro} =useGyro()
     const [high,setHigh]=useState(0)
+    const [sensor,setSensor]=useState(false)
    
     
     const [initialrotation,setInitialRotation]=useState<Quaternion>(Quaternion.ONE)
@@ -136,9 +137,11 @@ const Sensor = (props:any) => {
    
   return (
     <div>
+        <button  className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        onClick={()=>{setSensor(!sensor)}}>{sensor==true?<span>Hide</span>:<span>Show</span>} Calibrate Screen</button>
       
-        {props.sensor==true?
-        <section>
+        {sensor==true?
+        <section className='bg-gray-200'>
             <h1>Please use the readings below to check if the sensor is picking up data correctly.</h1>
         <br></br>
         App is now in mode  {props.calibration==true?<span>1</span>:<span>0</span>}
@@ -153,6 +156,7 @@ const Sensor = (props:any) => {
         
         
         }
+        <br></br>
         
         <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=>{
             localStorage.setItem("initial",JSON.stringify(abc))
