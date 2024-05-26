@@ -85,10 +85,21 @@ const Sensor = (props:any) => {
     
     function calculatemovement(){
         if(calculaterotation()[0]>0){
-            return "Flexion"
+            if(props.calibration==true){
+                return "Flexion"
+
+            }else{
+                return "Extension"
+            }
+           
         }
         if(calculaterotation()[0]<0){
-            return "Extension"
+            if(props.calibration==true){
+                return "Extension"
+
+            }else{
+                return "Flexion"
+            }
 
         }
         if(calculaterotation()[0]==0){
