@@ -6,8 +6,11 @@ const Welcome = (props:any) => {
         <section>
             This is the main screen.
             <br></br>
-            Purpose of this web app.<br>
+            <a className="underline" href="https://1drv.ms/w/s!AtC-jwMDykQHgTuXIMGCc1ESz_sK?e=PTgsbP" target="_blank">Purpose of this web app.</a>
+            <br>
             </br>
+          
+            
             <ul>
                 <li> To provide an accessible interface to measure physiological flexion and rotation of the cervical spine.</li>
                 <li>To allow measuring of angle during a hallpike.</li>
